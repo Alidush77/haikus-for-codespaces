@@ -1,0 +1,45 @@
+//@version=4 
+strategy("VWAP Crossover Strategy", overlay=true)
+
+cumulativePeriod = input(14, "Period")
+
+typicalPrice = (high + low + close) / 3
+typicalPriceVolume = typicalPrice * volume
+cumulativeTypicalPriceVolume = sum(typicalPriceVolume, cumulativePeriod)
+cumulativeVolume = sum(volume, cumulativePeriod)
+vwapValue = cumulativeTypicalPriceVolume / cumulativeVolume
+
+plot(vwapValue, color=color.blue)
+
+// Long (Buy) Condition
+longCondition = crossover(close, vwapValue)
+if (longCondition)
+    strategy.entry("Long", strategy.long)
+
+    // Short (Sell/Short) Condition
+    shortCondition = crossunder(close, vwapValue)
+    if (shortCondition)
+        strategy.entry("Short", strategy.short)
+        //@version=4
+        strategy("VWAP Crossover Strategy", overlay=true)
+
+        cumulativePeriod = input(14, "Period")
+
+        typicalPrice = (high + low + close) / 3
+        typicalPriceVolume = typicalPrice * volume
+        cumulativeTypicalPriceVolume = sum(typicalPriceVolume, cumulativePeriod)
+        cumulativeVolume = sum(volume, cumulativePeriod)
+        vwapValue = cumulativeTypicalPriceVolume / cumulativeVolume
+
+        plot(vwapValue, color=color.blue)
+
+        // Long (Buy) Condition
+        longCondition = crossover(close, vwapValue)
+        if (longCondition)
+            strategy.entry("Long", strategy.long)
+
+            // Short (Sell/Short) Condition
+            shortCondition = crossunder(close, vwapValue)
+            if (shortCondition)
+                strategy.entry("Short", strategy.short)
+                
